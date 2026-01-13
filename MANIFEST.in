@@ -1,0 +1,5 @@
+include README.md
+include LICENSE
+recursive-include paypal/templates *
+recursive-include paypal/static *
+recursive-include paypal/migrations *.py

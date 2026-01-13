@@ -1,4 +1,4 @@
-# dj-paypal
+# django-checkout-paypal
 
 A Django package for integrating PayPal payments into your Django application.
 
@@ -45,7 +45,7 @@ PAYPAL_CANCEL_URL = 'https://yourdomain.com/payment/cancel/'
 
 ### 3. Add URLs
 
-Include the dj-paypal URLs in your project's `urls.py`:
+Include the django-paypal-checkout URLs in your project's `urls.py`:
 
 ```python
 from django.urls import path, include
